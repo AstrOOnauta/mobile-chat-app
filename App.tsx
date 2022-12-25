@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {NativeBaseProvider, Box} from 'native-base';
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-    </View>
+    <NativeBaseProvider>
+      <Box style={styles.container}>Hello world</Box>
+    </NativeBaseProvider>
   );
 }
 
