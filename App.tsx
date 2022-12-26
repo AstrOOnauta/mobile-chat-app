@@ -1,11 +1,14 @@
 import React from 'react';
 import {NativeBaseProvider} from 'native-base';
-import ChatCard from 'src/components/ChatCard';
+
+import Routes from 'src/routes';
+
+import 'react-native-gesture-handler';
 
 function App() {
   return (
     <NativeBaseProvider>
-      <ChatCard />
+      <Routes />
     </NativeBaseProvider>
   );
 }
