@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const path = require('path');
+
 /**
  * Metro configuration for React Native
  * https://github.com/facebook/react-native
@@ -6,6 +9,11 @@
  */
 
 module.exports = {
+  resolver: {
+    extraNodeModules: {
+      src: path.resolve(__dirname, 'src'),
+    },
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {

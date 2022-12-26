@@ -1,22 +1,13 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {NativeBaseProvider, Box} from 'native-base';
+import {NativeBaseProvider} from 'native-base';
+import ChatCard from 'src/components/ChatCard';
 
 function App() {
   return (
     <NativeBaseProvider>
-      <Box style={styles.container}>Hello world</Box>
+      <ChatCard />
     </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

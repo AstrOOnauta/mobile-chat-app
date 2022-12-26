@@ -1,3 +1,16 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "useUnknownInCatchVariables": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "incremental": true
+  },
+  "exclude": ["node_modules"]
 }
