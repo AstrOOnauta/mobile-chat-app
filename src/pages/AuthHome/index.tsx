@@ -3,8 +3,12 @@ import React from 'react';
 
 export default function AuthHome() {
   return (
-    <VStack flex={1} alignItems="center" justifyContent="center">
-      <Heading color="dark.100">Hello World!</Heading>
+    <VStack
+      bg="secondary[0]"
+      flex={1}
+      alignItems="center"
+      justifyContent="center">
+      <Heading color="light[0]">Hello World!</Heading>
     </VStack>
   );
 }
