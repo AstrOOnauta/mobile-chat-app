@@ -8,9 +8,9 @@ export const THEME = extendTheme({
       1: '#D49122',
     },
     secondary: {
-      '-1': '#0A0A0A',
+      '-1': '#575757',
       0: '#303030',
-      1: '#575757',
+      1: '#0A0A0A',
     },
     light: {
       '-1': '#FFFFFF',

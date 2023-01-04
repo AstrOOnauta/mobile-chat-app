@@ -1,14 +1,117 @@
-import {Heading, VStack} from 'native-base';
-import React from 'react';
+import React, {useState} from 'react';
+import {
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+} from 'react-native';
+import {Button, Heading, HStack, Image, Text, VStack} from 'native-base';
+import {Country} from 'react-native-country-picker-modal';
+import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
+import {useNavigation} from '@react-navigation/native';
+
+import Checkbox from 'src/components/Checkbox';
 
 export default function Login() {
+  const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
+    undefined,
+  );
+  const [phoneInput, setPhoneInput] = useState('');
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
+
+  const navigation = useNavigation();
+
+  function onSubmit() {
+    if (!phoneInput) {
+      return Alert.alert('Meteor Chat', 'Fill in your phone number');
+    }
+
+    if (!isAgreed) {
+      return Alert.alert(
+        'Meteor Chat',
+        'Accept the Terms of Service to continue',
+      );
+    }
+
+    navigation.navigate('confirm-otp' as never);
+  }
+
   return (
-    <VStack
-      bg="secondary[0]"
-      flex={1}
-      alignItems="center"
-      justifyContent="center">
-      <Heading color="light[0]">Login!</Heading>
-    </VStack>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <VStack bg="secondary[0]" flex={1} alignItems="center" p={6}>
+        <Image
+          w={100}
+          h={100}
+          my={9}
+          source={require('../../assets/images/logo.png')}
+        />
+        <Heading color="light[0]" textAlign="center">
+          Enter with your{'\n'}Mobile Phone Number
+        </Heading>
+        <VStack w="100%" flex={1} mt={60}>
+          <Text color="light[0]" fontSize="md" fontWeight="bold">
+            Mobile Phone
+          </Text>
+          <PhoneInput
+            withDarkTheme
+            selectedCountry={selectedCountry}
+            setSelectedCountry={setSelectedCountry}
+            value={phoneInput}
+            onChangeText={newValue =>
+              setPhoneInput(
+                phoneMask(newValue, selectedCountry?.callingCode[0]),
+              )
+            }
+            inputStyle={{
+              color: '#F3F3F3',
+              paddingVertical: Platform.OS === 'ios' ? 16 : 8,
+              paddingHorizontal: 16,
+              fontSize: 16,
+            }}
+            containerStyle={{
+              backgroundColor: '#575757',
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: '#F3F3F3',
+              borderRadius: 8,
+              marginVertical: 16,
+            }}
+          />
+          <HStack>
+            <Checkbox
+              mr={3}
+              isActive={isAgreed}
+              onPress={() => setIsAgreed(!isAgreed)}
+            />
+            <Text color="light[0]" fontSize="sm" fontWeight="bold">
+              I accept the{' '}
+            </Text>
+            <Text color="primary[0]" fontSize="sm" fontWeight="bold">
+              Terms of Service
+            </Text>
+          </HStack>
+          <Button
+            w="100%"
+            h={12}
+            mt={12}
+            bg="primary[0]"
+            _pressed={{bg: 'primary[1]'}}
+            onPress={onSubmit}>
+            <Text color="secondary[0]" fontWeight="bold" fontSize="2xl" mt={-1}>
+              Send
+            </Text>
+          </Button>
+        </VStack>
+        <Text
+          color="light[0]"
+          fontSize="md"
+          fontWeight="bold"
+          textAlign="center">
+          Connect with your friends {'\n'} for free!
+        </Text>
+      </VStack>
+    </TouchableWithoutFeedback>
   );
 }
