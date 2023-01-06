@@ -64,18 +64,12 @@ export default function Login() {
             }
             inputStyle={{
               color: '#F3F3F3',
-              paddingVertical: Platform.OS === 'ios' ? 16 : 8,
-              paddingHorizontal: 16,
-              fontSize: 16,
             }}
             containerStyle={{
               backgroundColor: '#575757',
-              flexDirection: 'row',
-              alignItems: 'center',
               borderWidth: 1,
               borderStyle: 'solid',
               borderColor: '#F3F3F3',
-              borderRadius: 8,
               marginVertical: 16,
             }}
           />
