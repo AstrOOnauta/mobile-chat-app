@@ -1,6 +1,6 @@
 import React from 'react';
-import {Icon, Pressable, IPressableProps} from 'native-base';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Pressable, IPressableProps, useTheme} from 'native-base';
+import * as Icon from 'phosphor-react-native';
 
 interface CheckboxProps extends IPressableProps {
   isActive?: boolean;
@@ -22,12 +22,7 @@ export default function Checkbox({isActive, ...rest}: CheckboxProps) {
       pr={0.5}
       _pressed={{bg: 'primary[1]'}}
       {...rest}>
-      <Icon
-        as={MaterialCommunityIcons}
-        name="check-bold"
-        color="light[0]"
-        size="md"
-      />
+      <Icon.Check weight="bold" color="#F3F3F3" size={22} />
     </Pressable>
   );
 }
