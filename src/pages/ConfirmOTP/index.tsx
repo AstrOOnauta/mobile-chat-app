@@ -1,17 +1,10 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
-import {
-  Button,
-  Heading,
-  HStack,
-  Image,
-  Pressable,
-  Text,
-  VStack,
-} from 'native-base';
+import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import OtpInputs from 'react-native-otp-inputs';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Button from 'src/components/Form/Button';
 
 export default function ConfirmOTP() {
   const [OTPCode, setOTPCode] = useState<string>('');
@@ -81,30 +74,18 @@ export default function ConfirmOTP() {
             </Pressable>
           </HStack>
           <Button
-            w="100%"
-            h={12}
+            type="primary"
+            title="Confirm Code"
+            onPress={onSubmit}
             mt={8}
-            bg="primary[0]"
-            _pressed={{bg: 'primary[1]'}}
-            onPress={onSubmit}>
-            <Text color="secondary[0]" fontWeight="bold" fontSize="xl" mt={-1}>
-              Confirm Code
-            </Text>
-          </Button>
+          />
           <Button
-            w="100%"
-            h={12}
+            isDisabled
+            type="secondary"
+            title="Resend SMS in 30s"
+            onPress={resendOTPCode}
             mt={5}
-            bg="transparent"
-            borderWidth={1}
-            borderStyle="solid"
-            borderColor="disabled"
-            _pressed={{bg: 'transparent', opacity: 0.6}}
-            onPress={resendOTPCode}>
-            <Text color="disabled" fontWeight="bold" fontSize="xl" mt={-1}>
-              Resend SMS in <Text color="primary[0]">30s</Text>
-            </Text>
-          </Button>
+          />
         </VStack>
         <Text
           color="light[0]"

@@ -1,6 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import {Button, Heading, Image, Text, VStack} from 'native-base';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {Heading, Image, Text, VStack} from 'native-base';
+
+import Button from 'src/components/Form/Button';
 
 export default function AuthHome() {
   const navigation = useNavigation();
@@ -30,16 +32,11 @@ export default function AuthHome() {
             Welcome to <Heading color="primary[0]">Meteor Prime</Heading>
           </Heading>
           <Button
-            w="100%"
-            h={12}
+            type="primary"
+            title="Continue"
+            onPress={() => navigation.navigate('login' as never)}
             mt={12}
-            bg="primary[0]"
-            _pressed={{bg: 'primary[1]'}}
-            onPress={() => navigation.navigate('login' as never)}>
-            <Text color="secondary[0]" fontWeight="bold" fontSize="2xl" mt={-1}>
-              Continue
-            </Text>
-          </Button>
+          />
         </VStack>
         <Text
           color="light[0]"

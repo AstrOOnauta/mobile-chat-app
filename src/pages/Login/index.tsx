@@ -1,16 +1,12 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Platform,
-} from 'react-native';
-import {Button, Heading, HStack, Image, Text, VStack} from 'native-base';
+import {Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {Heading, HStack, Image, Text, VStack} from 'native-base';
 import {Country} from 'react-native-country-picker-modal';
 import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
 import {useNavigation} from '@react-navigation/native';
 
 import Checkbox from 'src/components/Checkbox';
+import Button from 'src/components/Form/Button';
 
 export default function Login() {
   const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
@@ -86,17 +82,7 @@ export default function Login() {
               Terms of Service
             </Text>
           </HStack>
-          <Button
-            w="100%"
-            h={12}
-            mt={12}
-            bg="primary[0]"
-            _pressed={{bg: 'primary[1]'}}
-            onPress={onSubmit}>
-            <Text color="secondary[0]" fontWeight="bold" fontSize="2xl" mt={-1}>
-              Send
-            </Text>
-          </Button>
+          <Button type="primary" title="Send" onPress={onSubmit} mt={12} />
         </VStack>
         <Text
           color="light[0]"
