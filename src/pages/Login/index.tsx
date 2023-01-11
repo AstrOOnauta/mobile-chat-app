@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import {Heading, HStack, Image, Text, VStack} from 'native-base';
+import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import {Country} from 'react-native-country-picker-modal';
 import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
 import {useNavigation} from '@react-navigation/native';
@@ -78,9 +78,11 @@ export default function Login() {
             <Text color="light[0]" fontSize="sm" fontWeight="bold">
               I accept the{' '}
             </Text>
-            <Text color="primary[0]" fontSize="sm" fontWeight="bold">
-              Terms of Service
-            </Text>
+            <Pressable _pressed={{opacity: 0.6}}>
+              <Text color="primary[0]" fontSize="sm" fontWeight="bold">
+                Terms of Service
+              </Text>
+            </Pressable>
           </HStack>
           <Button type="primary" title="Send" onPress={onSubmit} mt={12} />
         </VStack>
