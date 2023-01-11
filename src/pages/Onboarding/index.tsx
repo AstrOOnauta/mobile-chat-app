@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
-import {Avatar, Box, HStack, Input, Pressable, Text, VStack} from 'native-base';
+import {Avatar, Box, HStack, Pressable, Text, VStack} from 'native-base';
 import * as Icon from 'phosphor-react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import Button from 'src/components/Form/Button';
+import Input from 'src/components/Form/Input';
 
 export default function Onboarding() {
   const [inputText, setInputText] = useState<string>('');
@@ -51,16 +52,6 @@ export default function Onboarding() {
         value={inputText}
         onChangeText={setInputText}
         placeholder="Enter your name here"
-        bg="secondary[-1]"
-        color="light[0]"
-        borderColor="light[0]"
-        fontSize="md"
-        _focus={{
-          bg: 'secondary[-1]',
-          borderColor: 'light[0]',
-          color: 'light[0]',
-          selectionColor: 'light[0]',
-        }}
       />
       <HStack mt={2}>
         <Icon.Info weight="fill" color="#B9B9B9" size={20} />
