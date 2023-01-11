@@ -2,22 +2,23 @@ import React, {useState} from 'react';
 import {Alert} from 'react-native';
 import {Avatar, Box, HStack, Pressable, Text, VStack} from 'native-base';
 import * as Icon from 'phosphor-react-native';
-import {useNavigation} from '@react-navigation/native';
 
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 
-export default function Onboarding() {
-  const [inputText, setInputText] = useState<string>('');
+interface OnboardingProps {
+  closeModal: () => void;
+}
 
-  const navigation = useNavigation();
+export default function Onboarding({closeModal}: OnboardingProps) {
+  const [inputText, setInputText] = useState<string>('');
 
   function onSubmit() {
     if (!inputText) {
       return Alert.alert('Meteor Chat', 'Fill the input field with your name');
     }
 
-    navigation.navigate('home' as never);
+    closeModal();
   }
 
   return (

@@ -1,22 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Alert} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import OtpInputs from 'react-native-otp-inputs';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+
 import Button from 'src/components/Form/Button';
+import AuthContext from 'src/shared/contexts/AuthContext';
 
 export default function ConfirmOTP() {
-  const [OTPCode, setOTPCode] = useState<string>('');
+  const {setHasUser} = useContext(AuthContext);
 
-  const navigation = useNavigation();
+  const [OTPCode, setOTPCode] = useState<string>('');
 
   function onSubmit() {
     if (OTPCode.length < 6) {
       return Alert.alert('Meteor Chat', 'Fill with OTP Code');
     }
 
-    navigation.navigate('onboarding' as never);
+    setHasUser(true);
   }
 
   function resendOTPCode() {

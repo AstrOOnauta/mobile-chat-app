@@ -5,6 +5,7 @@ import Routes from 'src/routes';
 
 import 'react-native-gesture-handler';
 import {THEME} from 'src/styles/theme';
+import {AuthContextProvider} from 'src/shared/contexts/AuthContext';
 
 function App() {
   const nativeBaseConfig = {
@@ -16,7 +17,9 @@ function App() {
 
   return (
     <NativeBaseProvider theme={THEME} config={nativeBaseConfig}>
-      <Routes />
+      <AuthContextProvider>
+        <Routes />
+      </AuthContextProvider>
     </NativeBaseProvider>
   );
 }
