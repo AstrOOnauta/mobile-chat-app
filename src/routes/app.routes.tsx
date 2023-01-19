@@ -8,6 +8,7 @@ import Onboarding from 'src/pages/Onboarding';
 import Home from 'src/pages/Home';
 import {Box} from 'native-base';
 import Camera from 'src/pages/Camera';
+import Contacts from 'src/pages/Contacts';
 
 export default function AppRoutes() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
@@ -84,7 +85,7 @@ export default function AppRoutes() {
         />
         <Tab.Screen
           name="Contacts"
-          component={Home}
+          component={Contacts}
           options={{
             headerShown: false,
             tabBarIcon: ({size, focused}) =>
