@@ -9,6 +9,7 @@ import Home from 'src/pages/Home';
 import {Box} from 'native-base';
 import Camera from 'src/pages/Camera';
 import Contacts from 'src/pages/Contacts';
+import Settings from 'src/pages/Settings';
 
 export default function AppRoutes() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
@@ -106,7 +107,7 @@ export default function AppRoutes() {
         />
         <Tab.Screen
           name="Settings"
-          component={Home}
+          component={Settings}
           options={{
             headerShown: false,
             tabBarIcon: ({size, focused}) =>
