@@ -7,6 +7,7 @@ import * as Icon from 'phosphor-react-native';
 import Onboarding from 'src/pages/Onboarding';
 import Home from 'src/pages/Home';
 import {Box} from 'native-base';
+import Camera from 'src/pages/Camera';
 
 export default function AppRoutes() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
@@ -62,7 +63,7 @@ export default function AppRoutes() {
         />
         <Tab.Screen
           name="Camera"
-          component={Home}
+          component={Camera}
           options={{
             headerShown: false,
             tabBarIcon: ({size, focused}) =>
