@@ -16,6 +16,7 @@ const CARDS_DATA = [
   },
   {
     id: 1,
+    screen: routes.app.settingsRoutes.notifications,
     name: 'Notifications',
     borderColor: 'light[0]',
     color: '#F3F3F3',
@@ -38,7 +39,7 @@ export default function Settings() {
   const navigation = useNavigation();
 
   function onSubmit(item: typeof CARDS_DATA[0]) {
-    if (item.id === 0) {
+    if (item.id === 0 || item.id === 1) {
       navigation.navigate(
         routes.app.settingsNavigation as never,
         {screen: item.screen} as never,
