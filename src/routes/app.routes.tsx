@@ -3,6 +3,7 @@ import {Modal} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import TabRoutes from './tab.routes';
+import SettingsRoutes from './settings.routes';
 
 import Onboarding from 'src/pages/Onboarding';
 import {routes} from 'src/shared/constants/routes';
@@ -26,6 +27,10 @@ export default function AppRoutes() {
           headerShown: false,
         }}>
         <Stack.Screen name={routes.app.tabNavigation} component={TabRoutes} />
+        <Stack.Screen
+          name={routes.app.settingsNavigation}
+          component={SettingsRoutes}
+        />
       </Stack.Navigator>
     </>
   );

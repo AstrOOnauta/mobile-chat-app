@@ -12,5 +12,9 @@ export const routes = {
       contacts: 'contacts',
       settings: 'settings',
     },
+    settingsNavigation: 'settings-navigation',
+    settingsRoutes: {
+      profile: 'profile',
+    },
   },
 };
