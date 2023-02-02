@@ -1,20 +1,15 @@
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Modal} from 'react-native';
-import * as Icon from 'phosphor-react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import TabRoutes from './tab.routes';
 
 import Onboarding from 'src/pages/Onboarding';
-import Home from 'src/pages/Home';
-import {Box} from 'native-base';
-import Camera from 'src/pages/Camera';
-import Contacts from 'src/pages/Contacts';
-import Settings from 'src/pages/Settings';
 
 export default function AppRoutes() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
-  const Tab = createBottomTabNavigator();
+  const Stack = createStackNavigator();
 
   function closeModal() {
     setIsModalOpen(false);
@@ -25,108 +20,12 @@ export default function AppRoutes() {
       <Modal visible={isModalOpen}>
         <Onboarding closeModal={closeModal} />
       </Modal>
-      <Tab.Navigator
-        screenOptions={() => ({
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            backgroundColor: '#FBB034',
-            position: 'absolute',
-            padding: 25,
-            height: Platform.OS === 'ios' ? 90 : 70,
-          },
-          tabBarItemStyle: {
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            marginTop: -30,
-          },
-        })}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({size, focused}) =>
-              focused ? (
-                <Box
-                  bg="light[0]"
-                  w={20}
-                  h={12}
-                  borderRadius={50}
-                  alignItems="center"
-                  justifyContent="center">
-                  <Icon.ChatText weight="fill" color="#FBB034" size={size} />
-                </Box>
-              ) : (
-                <Icon.ChatText weight="fill" color="#303030" size={size} />
-              ),
-          }}
-        />
-        <Tab.Screen
-          name="Camera"
-          component={Camera}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({size, focused}) =>
-              focused ? (
-                <Box
-                  bg="light[0]"
-                  w={20}
-                  h={12}
-                  borderRadius={50}
-                  alignItems="center"
-                  justifyContent="center">
-                  <Icon.Camera weight="fill" color="#FBB034" size={size} />
-                </Box>
-              ) : (
-                <Icon.Camera weight="fill" color="#303030" size={size} />
-              ),
-          }}
-        />
-        <Tab.Screen
-          name="Contacts"
-          component={Contacts}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({size, focused}) =>
-              focused ? (
-                <Box
-                  bg="light[0]"
-                  w={20}
-                  h={12}
-                  borderRadius={50}
-                  alignItems="center"
-                  justifyContent="center">
-                  <Icon.User weight="fill" color="#FBB034" size={size} />
-                </Box>
-              ) : (
-                <Icon.User weight="fill" color="#303030" size={size} />
-              ),
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({size, focused}) =>
-              focused ? (
-                <Box
-                  bg="light[0]"
-                  w={20}
-                  h={12}
-                  borderRadius={50}
-                  alignItems="center"
-                  justifyContent="center">
-                  <Icon.Gear weight="fill" color="#FBB034" size={size} />
-                </Box>
-              ) : (
-                <Icon.Gear weight="fill" color="#303030" size={size} />
-              ),
-          }}
-        />
-      </Tab.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="TabRoutes" component={TabRoutes} />
+      </Stack.Navigator>
     </>
   );
 }
