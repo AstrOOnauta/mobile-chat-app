@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Heading, Image, Text, VStack} from 'native-base';
 
 import Button from 'src/components/Form/Button';
+import {routes} from 'src/shared/constants/routes';
 
 export default function AuthHome() {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ export default function AuthHome() {
           <Button
             type="primary"
             title="Continue"
-            onPress={() => navigation.navigate('login' as never)}
+            onPress={() => navigation.navigate(routes.auth.login as never)}
             mt={12}
           />
         </VStack>

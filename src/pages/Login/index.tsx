@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import Checkbox from 'src/components/Checkbox';
 import Button from 'src/components/Form/Button';
+import {routes} from 'src/shared/constants/routes';
 
 export default function Login() {
   const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
@@ -29,7 +30,7 @@ export default function Login() {
       );
     }
 
-    navigation.navigate('confirm-otp' as never);
+    navigation.navigate(routes.auth.confirmOTP as never);
   }
 
   return (

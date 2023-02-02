@@ -8,6 +8,7 @@ import Home from 'src/pages/Home';
 import Camera from 'src/pages/Camera';
 import Contacts from 'src/pages/Contacts';
 import Settings from 'src/pages/Settings';
+import {routes} from 'src/shared/constants/routes';
 
 export default function TabRoutes() {
   const Tab = createBottomTabNavigator();
@@ -31,7 +32,7 @@ export default function TabRoutes() {
         },
       })}>
       <Tab.Screen
-        name="Home"
+        name={routes.app.tabRoutes.home}
         component={Home}
         options={{
           headerShown: false,
@@ -52,7 +53,7 @@ export default function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="Camera"
+        name={routes.app.tabRoutes.camera}
         component={Camera}
         options={{
           headerShown: false,
@@ -73,7 +74,7 @@ export default function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="Contacts"
+        name={routes.app.tabRoutes.contacts}
         component={Contacts}
         options={{
           headerShown: false,
@@ -94,7 +95,7 @@ export default function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name={routes.app.tabRoutes.settings}
         component={Settings}
         options={{
           headerShown: false,

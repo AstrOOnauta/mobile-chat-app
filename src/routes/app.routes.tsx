@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import TabRoutes from './tab.routes';
 
 import Onboarding from 'src/pages/Onboarding';
+import {routes} from 'src/shared/constants/routes';
 
 export default function AppRoutes() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
@@ -24,7 +25,7 @@ export default function AppRoutes() {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="TabRoutes" component={TabRoutes} />
+        <Stack.Screen name={routes.app.tabNavigation} component={TabRoutes} />
       </Stack.Navigator>
     </>
   );
