@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {Modal, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import {Country} from 'react-native-country-picker-modal';
 import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import Checkbox from 'src/components/Checkbox';
 import Button from 'src/components/Form/Button';
 import {routes} from 'src/shared/constants/routes';
+import WebViewPage from 'src/components/WebView';
 
 export default function Login() {
   const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
@@ -15,8 +16,13 @@ export default function Login() {
   );
   const [phoneInput, setPhoneInput] = useState('');
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
+  const [isWebViewOpen, setIsWebViewOpen] = useState<boolean>(false);
 
   const navigation = useNavigation();
+
+  function openWebView() {
+    setIsWebViewOpen(!isWebViewOpen);
+  }
 
   function onSubmit() {
     if (!phoneInput) {
@@ -79,7 +85,7 @@ export default function Login() {
             <Text color="light[0]" fontSize="sm" fontWeight="bold">
               I accept the{' '}
             </Text>
-            <Pressable _pressed={{opacity: 0.6}}>
+            <Pressable _pressed={{opacity: 0.6}} onPress={openWebView}>
               <Text color="primary[0]" fontSize="sm" fontWeight="bold">
                 Terms of Service
               </Text>
@@ -94,6 +100,14 @@ export default function Login() {
           textAlign="center">
           Connect with your friends {'\n'} for free!
         </Text>
+
+        <Modal animationType="slide" transparent visible={isWebViewOpen}>
+          <WebViewPage
+            link="https://github.com/AstrOOnauta/mobile-chat-app"
+            title="Terms of Use"
+            closeWebView={openWebView}
+          />
+        </Modal>
       </VStack>
     </TouchableWithoutFeedback>
   );

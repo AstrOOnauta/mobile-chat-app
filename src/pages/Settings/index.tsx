@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Modal} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import * as Icon from 'phosphor-react-native';
 
 import {version} from '../../../package.json';
 import {useNavigation} from '@react-navigation/native';
 import {routes} from 'src/shared/constants/routes';
+import WebViewPage from 'src/components/WebView';
 
 const CARDS_DATA = [
   {
@@ -36,14 +38,24 @@ const CARDS_DATA = [
 ];
 
 export default function Settings() {
+  const [isWebViewOpen, setIsWebViewOpen] = useState<boolean>(false);
+
   const navigation = useNavigation();
 
+  function openWebView() {
+    setIsWebViewOpen(!isWebViewOpen);
+  }
+
   function onSubmit(item: typeof CARDS_DATA[0]) {
-    if (item.id === 0 || item.id === 1) {
-      navigation.navigate(
+    if (item.screen) {
+      return navigation.navigate(
         routes.app.settingsNavigation as never,
         {screen: item.screen} as never,
       );
+    }
+
+    if (item.id === 2) {
+      return openWebView();
     }
   }
 
@@ -94,6 +106,14 @@ export default function Settings() {
           </Text>
         </VStack>
       </HStack>
+
+      <Modal animationType="slide" transparent visible={isWebViewOpen}>
+        <WebViewPage
+          link="https://github.com/AstrOOnauta/mobile-chat-app"
+          title="Terms of Use"
+          closeWebView={openWebView}
+        />
+      </Modal>
     </VStack>
   );
 }
