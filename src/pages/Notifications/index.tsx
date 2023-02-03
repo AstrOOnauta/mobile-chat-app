@@ -48,7 +48,7 @@ export default function Notifications() {
           justifyContent="space-between"
           alignItems="center">
           <Text color="light[0]" fontWeight="bold" fontSize="xl">
-            Mute Chats
+            Mute Groups
           </Text>
           <Switch
             offTrackColor="light[1]"
