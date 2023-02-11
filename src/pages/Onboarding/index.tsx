@@ -13,6 +13,11 @@ interface OnboardingProps {
 
 export default function Onboarding({closeModal}: OnboardingProps) {
   const [inputText, setInputText] = useState<string>('');
+  const [profilePicture, setProfilePicture] = useState<string>('');
+
+  function changePicture(picture: string) {
+    setProfilePicture(picture);
+  }
 
   function onSubmit() {
     if (!inputText) {
@@ -24,7 +29,7 @@ export default function Onboarding({closeModal}: OnboardingProps) {
 
   return (
     <VStack bg="secondary[0]" flex={1} p={6} justifyContent="center" mt={-24}>
-      <ChangePicture />
+      <ChangePicture picture={profilePicture} changePicture={changePicture} />
       <Text mt={8} mb={4} color="light[0]" fontSize="md" fontWeight="bold">
         Your Name
       </Text>

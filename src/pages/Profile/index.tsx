@@ -25,6 +25,10 @@ export default function Profile() {
 
   const {control, handleSubmit} = useForm<FormProps>();
 
+  function changePicture(picture: string) {
+    setProfilePicture(picture);
+  }
+
   function onSubmit(form: FormProps) {
     Alert.alert(
       'Meteor Chat',
@@ -43,7 +47,10 @@ export default function Profile() {
         <VStack bg="secondary[0]" flex={1} px={4} py={6}>
           <HStack justifyContent="space-between">
             <BackButton />
-            <ChangePicture />
+            <ChangePicture
+              picture={profilePicture}
+              changePicture={changePicture}
+            />
             <VStack w={10} h={10} />
           </HStack>
           <VStack py={6} px={2}>
