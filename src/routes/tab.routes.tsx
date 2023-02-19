@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as Icon from 'phosphor-react-native';
 
 import Home from 'src/pages/Home';
-import Camera from 'src/pages/Camera';
+import CameraPage from 'src/pages/Camera';
 import Contacts from 'src/pages/Contacts';
 import Settings from 'src/pages/Settings';
 import {routes} from 'src/shared/constants/routes';
@@ -54,7 +54,7 @@ export default function TabRoutes() {
       />
       <Tab.Screen
         name={routes.app.tabRoutes.camera}
-        component={Camera}
+        component={CameraPage}
         options={{
           headerShown: false,
           tabBarIcon: ({size, focused}) =>

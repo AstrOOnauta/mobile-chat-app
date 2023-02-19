@@ -34,6 +34,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.18.2",
     "react-native-svg": "12.1.1",
+    "react-native-vision-camera": "^2.15.4",
     "react-native-webview": "^11.26.1",
     "tsc-files": "^1.1.3"
   },
