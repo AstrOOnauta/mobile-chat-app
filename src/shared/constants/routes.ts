@@ -12,6 +12,10 @@ export const routes = {
       contacts: 'contacts',
       settings: 'settings',
     },
+    homeRoutes: {
+      chats: 'chats',
+      groups: 'groups',
+    },
     settingsNavigation: 'settings-navigation',
     settingsRoutes: {
       profile: 'profile',
