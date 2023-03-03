@@ -1,28 +1,88 @@
-import React, {useState, useContext} from 'react';
+/* eslint-disable prefer-const */
+import React, {useState, useContext, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import OtpInputs from 'react-native-otp-inputs';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {StackScreenProps} from '@react-navigation/stack';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 import Button from 'src/components/Form/Button';
 import AuthContext from 'src/shared/contexts/AuthContext';
+import {AuthRoutesParamsList} from 'src/shared/interfaces/routes';
 
-export default function ConfirmOTP() {
-  const {setHasUser} = useContext(AuthContext);
+export default function ConfirmOTP({
+  route,
+  navigation,
+}: StackScreenProps<AuthRoutesParamsList, 'confirm-otp'>) {
+  const {setUser} = useContext(AuthContext);
 
   const [OTPCode, setOTPCode] = useState<string>('');
+  const [secondsToResend, setSecondsToResend] = useState<number>(30);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function onSubmit() {
+  let {confirmation, phoneNumber} = route.params;
+
+  function goBack() {
+    Alert.alert(
+      'Meteor Chat',
+      'Would you like to change your phone number?',
+      [
+        {text: 'Cancel'},
+        {
+          text: 'Yes',
+          onPress: () => navigation.goBack(),
+        },
+      ],
+      {cancelable: false},
+    );
+  }
+
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    setUser(user);
+  }
+
+  async function onSubmit() {
     if (OTPCode.length < 6) {
       return Alert.alert('Meteor Chat', 'Fill with OTP Code');
     }
-
-    setHasUser(true);
+    try {
+      await confirmation.confirm(OTPCode);
+      auth().onAuthStateChanged(onAuthStateChanged);
+    } catch (error) {
+      console.log('Invalid code.');
+    }
   }
 
-  function resendOTPCode() {
-    return Alert.alert('Meteor Chat', 'Wait 30s before resend the SMS');
+  async function resendOTPCode() {
+    if (secondsToResend > 0) {
+      return Alert.alert(
+        'Meteor Chat',
+        `Wait ${secondsToResend}s before resend the SMS`,
+      );
+    }
+
+    setSecondsToResend(30);
+    setIsLoading(true);
+
+    confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+
+    setIsLoading(false);
   }
+
+  function countdown() {
+    if (secondsToResend > 0) {
+      const interval = setTimeout(() => {
+        setSecondsToResend(secondsToResend - 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }
+
+  useEffect(() => {
+    countdown();
+  }, [secondsToResend]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,9 +126,11 @@ export default function ConfirmOTP() {
               fontWeight="normal"
               mt={4}>
               Sent SMS to{' '}
-              <Text fontWeight="bold">+55 84 99999-9999.{'  '}</Text>
+              <Text fontWeight="bold">
+                {phoneNumber}.{'  '}
+              </Text>
             </Text>
-            <Pressable _pressed={{opacity: 0.6}}>
+            <Pressable _pressed={{opacity: 0.6}} onPress={goBack}>
               <Text fontSize="xs" fontWeight="bold" color="primary[0]">
                 Wrong Number?
               </Text>
@@ -81,9 +143,12 @@ export default function ConfirmOTP() {
             mt={8}
           />
           <Button
-            isDisabled
+            isDisabled={secondsToResend > 0}
+            isLoading={isLoading}
             type="secondary"
-            title="Resend SMS in 30s"
+            title={`Resend SMS ${
+              secondsToResend > 0 ? `in ${secondsToResend}s` : ''
+            }`}
             onPress={resendOTPCode}
             mt={5}
           />

@@ -7,7 +7,7 @@ import AuthContext from 'src/shared/contexts/AuthContext';
 import AppRoutes from './app.routes';
 
 export default function Routes() {
-  const {hasUser} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
   const theme = useTheme();
 
@@ -17,7 +17,7 @@ export default function Routes() {
         barStyle="light-content"
         backgroundColor={theme.colors.dark[100]}
       />
-      {hasUser ? <AppRoutes /> : <AuthRoutes />}
+      {user ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
 }

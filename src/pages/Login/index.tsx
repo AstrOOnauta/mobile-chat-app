@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {useState} from 'react';
 import {Modal, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import {Country} from 'react-native-country-picker-modal';
 import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 import Checkbox from 'src/components/Checkbox';
 import Button from 'src/components/Form/Button';
@@ -17,6 +19,7 @@ export default function Login() {
   const [phoneInput, setPhoneInput] = useState('');
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
   const [isWebViewOpen, setIsWebViewOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigation = useNavigation();
 
@@ -24,7 +27,20 @@ export default function Login() {
     setIsWebViewOpen(!isWebViewOpen);
   }
 
-  function onSubmit() {
+  function toConfirmOTP(confirmation: any, phoneNumber: string) {
+    if (confirmation) {
+      setIsLoading(false);
+
+      navigation.navigate(
+        routes.auth.confirmOTP as never,
+        {confirmation: confirmation, phoneNumber: phoneNumber} as never,
+      );
+    }
+  }
+
+  async function onSubmit() {
+    const phoneNumber = `${selectedCountry?.callingCode[0]} ${phoneInput}`;
+
     if (!phoneInput) {
       return Alert.alert('Meteor Chat', 'Fill in your phone number');
     }
@@ -36,7 +52,10 @@ export default function Login() {
       );
     }
 
-    navigation.navigate(routes.auth.confirmOTP as never);
+    setIsLoading(true);
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+
+    toConfirmOTP(confirmation, phoneNumber);
   }
 
   return (
@@ -91,7 +110,14 @@ export default function Login() {
               </Text>
             </Pressable>
           </HStack>
-          <Button type="primary" title="Send" onPress={onSubmit} mt={12} />
+          <Button
+            type="primary"
+            title="Send"
+            onPress={onSubmit}
+            mt={12}
+            isLoading={isLoading}
+            isLoadingText="Sending"
+          />
         </VStack>
         <Text
           color="light[0]"

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {Avatar, Box, Pressable} from 'native-base';
 import * as Icon from 'phosphor-react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {ImageLibraryOptions} from 'react-native-image-picker/lib/typescript/types';
+
+import AuthContext from 'src/shared/contexts/AuthContext';
 
 interface ChangePictureProps {
   picture: string;
@@ -14,10 +16,14 @@ export default function ChangePicture({
   picture,
   changePicture,
 }: ChangePictureProps) {
+  const {user} = useContext(AuthContext);
+
   async function launchImageLibrary() {
     const options: ImageLibraryOptions = {
       includeBase64: true,
       mediaType: 'photo' as const,
+      maxWidth: 218,
+      maxHeight: 218,
     };
 
     try {
@@ -55,11 +61,13 @@ export default function ChangePicture({
         alignSelf="center"
         size="2xl"
         source={
-          picture
+          user?.photoURL
+            ? {uri: user?.photoURL}
+            : picture
             ? {uri: picture}
             : require('../../assets/images/user-icon.png')
         }
-        p={picture ? 0 : 4}
+        p={picture || user?.photoURL ? 0 : 4}
       />
       <Pressable
         position="absolute"
