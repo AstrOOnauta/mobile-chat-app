@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Modal} from 'react-native';
+import {Alert, Modal} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import * as Icon from 'phosphor-react-native';
+import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 import {version} from '../../../package.json';
-import {useNavigation} from '@react-navigation/native';
 import {routes} from 'src/shared/constants/routes';
 import WebViewPage from 'src/components/WebView';
 
@@ -46,6 +47,12 @@ export default function Settings() {
     setIsWebViewOpen(!isWebViewOpen);
   }
 
+  async function signOut() {
+    await auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  }
+
   function onSubmit(item: typeof CARDS_DATA[0]) {
     if (item.screen) {
       return navigation.navigate(
@@ -56,6 +63,21 @@ export default function Settings() {
 
     if (item.id === 2) {
       return openWebView();
+    }
+
+    if (item.id === 3) {
+      return Alert.alert(
+        'Meteor Chat',
+        'Are you sure you want to leave the Meteor Chat?',
+        [
+          {text: 'Cancel'},
+          {
+            text: 'Yes',
+            onPress: () => signOut(),
+          },
+        ],
+        {cancelable: false},
+      );
     }
   }
 
