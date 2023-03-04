@@ -19,7 +19,9 @@ export default function ConfirmOTP({
 
   const [OTPCode, setOTPCode] = useState<string>('');
   const [secondsToResend, setSecondsToResend] = useState<number>(30);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  const [isResending, setIsResending] = useState<boolean>(false);
+  const [resendConfirmation, setResendConfirmation] = useState<any>(null);
 
   let {confirmation, phoneNumber} = route.params;
 
@@ -46,12 +48,22 @@ export default function ConfirmOTP({
     if (OTPCode.length < 6) {
       return Alert.alert('Meteor Chat', 'Fill with OTP Code');
     }
+
+    setIsSubmiting(true);
+
     try {
-      await confirmation.confirm(OTPCode);
+      if (resendConfirmation) {
+        await resendConfirmation.confirm(OTPCode);
+      } else {
+        await confirmation.confirm(OTPCode);
+      }
+
       auth().onAuthStateChanged(onAuthStateChanged);
     } catch (error) {
       console.log('Invalid code.');
     }
+
+    setIsSubmiting(false);
   }
 
   async function resendOTPCode() {
@@ -62,12 +74,13 @@ export default function ConfirmOTP({
       );
     }
 
+    setIsResending(true);
+
+    const res = await auth().signInWithPhoneNumber(phoneNumber);
+    setResendConfirmation(res);
+
+    setIsResending(false);
     setSecondsToResend(30);
-    setIsLoading(true);
-
-    confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-
-    setIsLoading(false);
   }
 
   function countdown() {
@@ -137,6 +150,8 @@ export default function ConfirmOTP({
             </Pressable>
           </HStack>
           <Button
+            isDisabled={isSubmiting}
+            isLoading={isSubmiting}
             type="primary"
             title="Confirm Code"
             onPress={onSubmit}
@@ -144,7 +159,7 @@ export default function ConfirmOTP({
           />
           <Button
             isDisabled={secondsToResend > 0}
-            isLoading={isLoading}
+            isLoading={isResending}
             type="secondary"
             title={`Resend SMS ${
               secondsToResend > 0 ? `in ${secondsToResend}s` : ''
