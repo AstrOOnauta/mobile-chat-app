@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Alert, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {Box, HStack, ScrollView, Text, VStack} from 'native-base';
 import {ICountry, PhoneInput} from 'react-native-international-phone-number';
@@ -8,6 +8,7 @@ import BackButton from 'src/components/BackButton';
 import ChangePicture from 'src/components/ChangePicture';
 import Input from 'src/components/Form/Input';
 import Button from 'src/components/Form/Button';
+import AuthContext from 'src/shared/contexts/AuthContext';
 
 interface FormProps extends FieldValues {
   username: string;
@@ -17,12 +18,16 @@ interface FormProps extends FieldValues {
 }
 
 export default function Profile() {
-  const [profilePicture, setProfilePicture] = useState<string>('');
+  const {user} = useContext(AuthContext);
+
+  const [profilePicture, setProfilePicture] = useState<string>(
+    user?.photoURL || '',
+  );
   const [selectedCountry, setSelectedCountry] = useState<undefined | ICountry>(
     undefined,
   );
 
-  const {control, handleSubmit} = useForm<FormProps>();
+  const {control, handleSubmit, setValue, watch} = useForm<FormProps>();
 
   function handleSelectedCountry(country: ICountry) {
     setSelectedCountry(country);
@@ -36,13 +41,22 @@ export default function Profile() {
     Alert.alert(
       'Meteor Chat',
       `Profile Edited Successfully! \n
-      Username: ${form.username} \n
+      User ID: ${form.userId} \n
       Name: ${form.name} \n
       Phone Number: ${selectedCountry?.callingCode[0]} ${form.phoneNumber} \n
       E-mail: ${form.email} \n
       `,
     );
   }
+
+  useEffect(() => {
+    const watchPhoneNumber = watch('phoneNumber');
+
+    setValue('userId', user?.uid);
+    setValue('name', user?.displayName as string);
+    setValue('phoneNumber', watchPhoneNumber);
+    setValue('email', user?.email as string);
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,16 +73,17 @@ export default function Profile() {
           <VStack py={6} px={2}>
             <Box mb={8}>
               <Text mb={2} color="light[0]" fontSize="md" fontWeight="medium">
-                Username
+                User ID
               </Text>
               <Controller
-                name="username"
+                name="userId"
                 control={control}
                 render={({field: {onChange, value}}) => (
                   <Input
                     placeholder="Insert your username here"
                     value={value}
                     onChangeText={onChange}
+                    isDisabled
                   />
                 )}
               />
@@ -106,6 +121,7 @@ export default function Profile() {
                     inputStyle={{color: '#F3F3F3'}}
                     placeholderTextColor="#B9B9B9"
                     withDarkTheme
+                    defaultValue={user?.phoneNumber as string}
                     value={value}
                     onChangePhoneNumber={onChange}
                     selectedCountry={selectedCountry}
