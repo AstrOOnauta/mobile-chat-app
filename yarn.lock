@@ -7296,10 +7296,10 @@ react-native-image-picker@^5.0.1:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.0.1.tgz#c9e99217396bc82a977785e39e14afb4819e8448"
   integrity sha512-+poQTHOnEGrbxJnut591XA9006svFOyfPg/i5bv+fLuwoSHh5HW0E/PVhvT8lbX0Z5C108vh3DAsnrfFFnPBGw==
 
-react-native-international-phone-number@^0.2.8:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/react-native-international-phone-number/-/react-native-international-phone-number-0.2.8.tgz#f2359a84c94802a84ca6a0270da5123a7f5b03d4"
-  integrity sha512-k0r8zEmGPW3Uog/0VpJgSRMutPN3MK2Hq1/IGem+Bqx9aUyYzaQ8xk5nidpOrKgcbMvdidUDHXmovJ5tgrP0MA==
+react-native-international-phone-number@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-international-phone-number/-/react-native-international-phone-number-0.4.0.tgz#d1569eb371acf985de46f406772cab57ca6d1618"
+  integrity sha512-92ebH/I1sJVyZLq+RkyQyt/3aqhPqbTrrXSqCnh6vm2e8xHiqQo6/sQ8nKYn+9d85B5v5eQXPy5tBVSQrtHJTg==
   dependencies:
     react-native-country-picker-modal "^2.0.0"
 

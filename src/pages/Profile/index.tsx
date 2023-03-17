@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {Box, HStack, ScrollView, Text, VStack} from 'native-base';
-import {phoneMask, PhoneInput} from 'react-native-international-phone-number';
-import {Country} from 'react-native-country-picker-modal';
+import {ICountry, PhoneInput} from 'react-native-international-phone-number';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
 
 import BackButton from 'src/components/BackButton';
@@ -19,11 +18,15 @@ interface FormProps extends FieldValues {
 
 export default function Profile() {
   const [profilePicture, setProfilePicture] = useState<string>('');
-  const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
+  const [selectedCountry, setSelectedCountry] = useState<undefined | ICountry>(
     undefined,
   );
 
   const {control, handleSubmit} = useForm<FormProps>();
+
+  function handleSelectedCountry(country: ICountry) {
+    setSelectedCountry(country);
+  }
 
   function changePicture(picture: string) {
     setProfilePicture(picture);
@@ -103,14 +106,10 @@ export default function Profile() {
                     inputStyle={{color: '#F3F3F3'}}
                     placeholderTextColor="#B9B9B9"
                     withDarkTheme
-                    selectedCountry={selectedCountry}
-                    setSelectedCountry={setSelectedCountry}
                     value={value}
-                    onChangeText={newValue =>
-                      onChange(
-                        phoneMask(newValue, selectedCountry?.callingCode[0]),
-                      )
-                    }
+                    onChangePhoneNumber={onChange}
+                    selectedCountry={selectedCountry}
+                    onChangeSelectedCountry={handleSelectedCountry}
                   />
                 )}
               />

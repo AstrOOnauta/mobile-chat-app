@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Modal, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {Heading, HStack, Image, Pressable, Text, VStack} from 'native-base';
 import {Country} from 'react-native-country-picker-modal';
-import {PhoneInput, phoneMask} from 'react-native-international-phone-number';
+import {PhoneInput, ICountry} from 'react-native-international-phone-number';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
@@ -13,7 +13,7 @@ import {routes} from 'src/shared/constants/routes';
 import WebViewPage from 'src/components/WebView';
 
 export default function Login() {
-  const [selectedCountry, setSelectedCountry] = useState<undefined | Country>(
+  const [selectedCountry, setSelectedCountry] = useState<undefined | ICountry>(
     undefined,
   );
   const [phoneInput, setPhoneInput] = useState('');
@@ -22,6 +22,14 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigation = useNavigation();
+
+  function handleInputValue(phoneNumber: string) {
+    setPhoneInput(phoneNumber);
+  }
+
+  function handleSelectedCountry(country: ICountry) {
+    setSelectedCountry(country);
+  }
 
   function openWebView() {
     setIsWebViewOpen(!isWebViewOpen);
@@ -76,14 +84,10 @@ export default function Login() {
           </Text>
           <PhoneInput
             withDarkTheme
-            selectedCountry={selectedCountry}
-            setSelectedCountry={setSelectedCountry}
             value={phoneInput}
-            onChangeText={newValue =>
-              setPhoneInput(
-                phoneMask(newValue, selectedCountry?.callingCode[0]),
-              )
-            }
+            onChangePhoneNumber={handleInputValue}
+            selectedCountry={selectedCountry}
+            onChangeSelectedCountry={handleSelectedCountry}
             inputStyle={{
               color: '#F3F3F3',
             }}
