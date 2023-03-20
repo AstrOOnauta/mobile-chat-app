@@ -21,5 +21,6 @@ export const routes = {
       profile: 'profile',
       notifications: 'notifications',
     },
+    chatBox: 'chat-box',
   },
 };
